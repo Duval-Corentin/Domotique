@@ -135,6 +135,7 @@ class LcdDisplay{
         //---------------------------------------------------
         void setCursorAtPosition(char szLine, char szCol,bool isVisible, bool isBlinking);
 
+        void setBacklight(bool state);
     private:
         // Flag to know if operations are valid or not
         bool m_isDeviceInitialized;
@@ -144,6 +145,9 @@ class LcdDisplay{
 
         // File descriptor of the device
         int m_nDeviceFD;
+
+        // backlight
+        bool backlight;
 
         //---------------------------------------------------
         /**

@@ -31,6 +31,8 @@
 LcdDisplay::LcdDisplay(unsigned char szAddres){
     m_szAddres = szAddres;
     m_isDeviceInitialized = false;
+
+    backlight = true;
 }
 
 //---------------------------------------------------
@@ -147,6 +149,12 @@ LcdDisplay::displayStringAtPosition(const char* pData, char szLine, char szCol){
     displayString(pData);
 }
 
+
+void LcdDisplay::setBacklight(bool state){
+    this->backlight = state;
+    displayStringAtPosition("", 1, 0);
+
+}
 //---------------------------------------------------
 /**
   * setCursorAtPosition : setCursor
@@ -222,8 +230,13 @@ LcdDisplay::write(char szData, char szMode){
 //---------------------------------------------------
 void
 LcdDisplay::writeNibble(char szData){
-    writei2c(szData | K_LCD_BACKLIGHT);
-    strobe(szData);
+    if(this->backlight){
+        writei2c(szData | K_LCD_BACKLIGHT);
+        strobe(szData);    
+    }else{
+        writei2c(szData | K_LCD_NOBACKLIGHT);
+        strobe(szData);
+    }
 }
 
 //---------------------------------------------------
@@ -236,10 +249,18 @@ LcdDisplay::writeNibble(char szData){
 //---------------------------------------------------
 void
 LcdDisplay::strobe(char szData){
-    writei2c(szData | K_LCD_EN_MASK | K_LCD_BACKLIGHT);
-    usleep(800);
-    writei2c(((szData & ~K_LCD_EN_MASK) | K_LCD_BACKLIGHT));
-    usleep(400);
+
+    if(this->backlight){
+        writei2c(szData | K_LCD_EN_MASK | K_LCD_BACKLIGHT);
+        usleep(800);
+        writei2c(((szData & ~K_LCD_EN_MASK) | K_LCD_BACKLIGHT));
+        usleep(400);
+    }else{
+        writei2c(szData | K_LCD_EN_MASK | K_LCD_NOBACKLIGHT);
+        usleep(800);
+        writei2c(((szData & ~K_LCD_EN_MASK) | K_LCD_NOBACKLIGHT));
+        usleep(400);
+    }
 }
 
 //---------------------------------------------------
