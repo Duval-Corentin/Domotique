@@ -19,8 +19,9 @@ private:
 
     Pi2c arduino;
 
-    
-    void isUpdatable();
+    void updateData();
+    bool isUpdatable();
+
 public:
     Arduino_slave(int address, int update_time_stamp_ms);
 
@@ -30,8 +31,7 @@ public:
     char getPhoto2();
     char getPhoto3();
     char getPotentiometer();
-
-    void updateData();
+    char getPhotoAverage();
 };
 
 
