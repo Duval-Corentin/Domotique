@@ -8,6 +8,8 @@
 
 #include <mosquitto.h>
 
+typedef std::map<std::string, std::function<void(std::string)>> function_map;
+
 class Mqtt{
 private:
     std::string host;
@@ -19,8 +21,7 @@ private:
 
     struct mosquitto* mosq;
 
-    void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message);
-
+    static void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message);
 
 public: 
     Mqtt(std::string host, int port, std::string username, std::string password);
