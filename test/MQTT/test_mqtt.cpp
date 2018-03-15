@@ -13,11 +13,17 @@ int main(){
     std::string topic("test/test");
 
 
-    Mqtt mqtt_client(host, port, username, password);
+    Mqtt mqtt_client(host, port, username, password, "coco l'asticot", 2);
     mqtt_client.subscribe(topic, [](std::string message){
         std::cout << "message recu : " << message << std::endl;
     });
 
+    mqtt_client.subscribe("test/test2", [](std::string message){
+        std::cout << "message 2 : " << message << std::endl;
+    });
+
     getchar();
 
+    mqtt_client.unsubscribe(topic);
+    getchar();
 }
