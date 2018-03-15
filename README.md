@@ -2,5 +2,15 @@
 
 TO DO: 
 
-- Add class for Arduino 
-- change classs affected with new arduino class
+- Mqtt 
+- Spotify ( Mopity + Spotify + http)
+
+Mqtt::Mqtt
+Mqtt::~Mqtt
+Mqtt::send
+Mqtt::subscribe
+Mqtt::unsubscribe
+Mqtt::setQos
+Mqtt::getQos
+Mqtt::setId
+Mqtt::getId
